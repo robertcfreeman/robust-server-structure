@@ -5,24 +5,12 @@ const counts = require("./data/counts-data");
 const res = require("express/lib/response");
 
 app.use(express.json());
+const countsRouter = require("./counts/counts.router");
 const flipsRouter = require("./flips/flips.router");
 
-app.get("/counts/:countId", (req, res, next) => {
-  const {countId} = req.params;
-  const foundCount = counts[countId]
-  if (foundCount === undefined) {
-    next({status: 404, message: `Count id not found: ${countId}`})
-  } else {
-    res.json({data: foundCount});
-  }
-})
-
-app.get("/counts", (req,res, next) => {
-  res.json({data: counts});
-})
 
 
-
+app.use("/counts", countsRouter);
 app.use("/flips", flipsRouter);
 
 
